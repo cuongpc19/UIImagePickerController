@@ -12,6 +12,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
 
     @IBOutlet weak var imageView: UIImageView!
     
+    @IBOutlet weak var takePhotoButton: UIButton!
     @IBAction func selectPhoto(_ sender: UIButton) {
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -20,6 +21,14 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         self.present(picker, animated: true, completion: nil)
         
         
+    }
+    
+    @IBAction func takePhoto(_ sender: UIButton) {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        picker.sourceType = .camera
+        self.present(picker, animated: true, completion: nil)
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let chosenImage = info[UIImagePickerControllerEditedImage]
@@ -33,8 +42,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         super.viewDidLoad()
         //check whether there is camera or not in device
         let checkCamera = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
-        if (checkCamera) {
-            
+        if (!checkCamera) {
+            takePhotoButton.isHidden = true
         }
         
         
